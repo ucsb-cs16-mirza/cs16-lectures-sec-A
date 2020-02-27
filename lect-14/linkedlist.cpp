@@ -142,7 +142,7 @@ void clear(Node *&h){
 
 int main(){
    // create a new linked list
-   LinkedList list;
+   LinkedList list={0, 0};
    insert(list, 10);
    insert(list, 20);
    cout<<"Insert 10, then 20"<<endl;
