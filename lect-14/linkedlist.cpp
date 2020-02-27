@@ -25,6 +25,62 @@ struct Node{
    Node *next; //address of the next node
 };
 
+struct LinkedList{
+   Node *head; // pointer to the first node
+   Node *tail; //pointer to the last node
+};
+
+ Node* createSmallLinkedList(int x, int y);
+ void printSmallList(Node *head, int len);
+ Node* insert(Node *h, int value);
+ bool find(Node *h, int value);
+ int min(Node* h);
+ void print(Node *h);
+ void clear(Node *&h);
+
+//void insert(LinkedList ll, int value); 
+void insert(LinkedList& ll, int value); 
+// insert(list, 40);
+bool find(const LinkedList& ll, int value);
+
+/*A. bool find(LinkedList ll, int value);
+B. bool find(LinkedList& ll, int value);
+C. bool find(const LinkedList& ll, int value);
+D. Any of the above
+E. None of the above*/
+// A or C
+
+void print(const LinkedList& ll);
+void clear(LinkedList& ll); //modify the head and tail pointers
+
+
+void insert(LinkedList& ll, int value){
+   if(!ll.head){
+      //empty linked list
+      ll.head = insert(ll.head, value);
+      ll.tail = ll.head;
+
+   }else{
+      ll.head = insert(ll.head, value);
+   }
+}
+//bool find(Node *h, int value)
+bool find(const LinkedList& ll, int value){
+   return find(ll.head, value);
+}
+int min(const LinkedList& ll){
+   return 42;
+}
+void print(const LinkedList& ll){
+   print(ll.head);
+}
+void clear(LinkedList& ll){
+   clear(ll.head);
+   ll.head = 0;
+   ll.tail = 0;
+} //modify the head and tail pointers
+
+
 // create a two node linked list and return the head
 // of the linked list
  Node* createSmallLinkedList(int x, int y){
@@ -45,17 +101,18 @@ void printSmallList(Node *head, int len){
 // at the head of the list
 Node* insert(Node *h, int value){
    Node* n = new Node{value, h};
-   /*if(!h){
-      return n;
-   }else{
-      n->next = h;
-      return n;
-   }*/
    return n;
 }
 
 // checks if a given values exists in the list
 bool find(Node *h, int value){
+   Node *p = h;
+   while(p){
+      if(p->data == value){
+         return true;
+      } 
+      p = p->next;
+   }
    return false;
 }
 
@@ -84,13 +141,15 @@ void clear(Node *&h){
 }
 
 int main(){
-   Node *head = 0;  // create an empty linked list
-   head = insert(head, 10);
-   head = insert(head, 20);
+   // create a new linked list
+   LinkedList list;
+   insert(list, 10);
+   insert(list, 20);
    cout<<"Insert 10, then 20"<<endl;
    cout<<"print"<<endl;
-   print(head); // 20, 10
-   clear(head);
-
+   print(list); // 20, 10
+   clear(list);
+   cout<<"Print empty list"<<endl;
+   print(list);
    return 0;
 }
