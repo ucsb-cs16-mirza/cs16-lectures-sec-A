@@ -3,17 +3,74 @@
 #include <iostream>
 using namespace std;
 #include "linkedlist.h"
+// Final exam - Tuesday 4p - 7p 
+// Final review session - Friday
+// Today:
+// Practice - recursion and linked lists
+// Dynamic memory pitfalls
+// Evals
+// Past exam questions
 
-Node* createSmallLinkedList(int x, int y){
-  /* Node n1 = {x, 0};
-   Node n2 = {y, 0};
-   n1.next = &n2;
-   return &n1*/
-   Node* n1 = new Node{x, 0};
-   Node* n2 = new Node{y, 0};
-   n1->next = n2;
-   return n1;
+// Preconditions: linked list has at least one node
+// Post condition: returns the min of the list (recursively)
+int min(Node *h){
+   // Base case
+   if(h->next == 0){
+      //one node list
+      return h->data;
+   }
+
+   // 10->5->2->1->100
+   // 10 , result (1)
+   int result = min(h->next);
+   //1->5->2->10->100
+   // 1, result(2)
+   if(result < h->data){
+      return result;
+   }else{
+      return h->data;
+   }
+
 }
+
+// Precondition: h may be null or the head of a valid linked list
+// Postcondition: delete all the nodes with data (value)
+// and return the new head of the list
+// 10->20->30 value 20, 10->30, return the address of 10
+// 10->20->30 value 10, 20->30, 
+Node* deleteValue{Node *h, int value}{
+   if(!h){
+                 // h->data -segmatentation fault if h is null
+                 // delete 0; is okay
+      return 0;
+   }   
+   // recursive case
+   Node *newNext = deleteValue(h->next, value);
+   // (1) 10->20->30->10, value 10, return address of node 20
+   //  10->20->30 , address of 20
+   // (2) 10->10->20->30->10->40, value 10, return address of node 20
+   //         20->30->40
+   if(h->data == value){
+       delete h;
+       return newNext;
+   }else{
+   // (1) 200->20->30->10, value 10, return address of node 20
+   //     200->20->30 , address of 20
+   //   return h;
+   // (2) 200->10->20->30->10->40, value 10, return address of node 20
+   //     200->20->30->40
+      h->next = newNext;
+      return h;
+
+   }
+
+   
+
+   
+
+
+}
+
 //Preconditiion - h is the head of a valid linked list
 //Postcondition - insert a new node with data "value"
 // at the head of the list and then return the new head
@@ -59,9 +116,7 @@ bool findRecursive(Node *h, int value){
    }
    return findRecursive(h->next, value);
 }
-Node* deleteValue{Node *h, int value}{
 
-}
 bool find(Node *h, int value){
    Node *p = h;
    while(p){
